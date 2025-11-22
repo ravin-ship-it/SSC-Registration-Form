@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form - Radio Button</title>
+    <link rel="stylesheet" href="./styles/style4.css">
+</head>
+
+<body>
+    <form>
+        <h2>SSC Registration Form</h2>
+        <label for="fname">First Name</label>
+        <input type="text" required name="fname" id="fname">
+        <label for="mname">Middle Name</label>
+        <input type="mname" name="mname" id="mname">
+        <label for="lname">Last Name</label>
+        <input type="text" name="lname" id="lname">
+        <label for="gender">Select Your Gender</label>
+        <div id="gender">
+            <div>
+                <input type="radio" name="gender" id="male" value="Male">
+                <label for="male">Male</label>
+            </div>
+            <div>
+                <input type="radio" name="gender" id="female" value="Female">
+                <label for="female">Female</label>
+            </div>
+            <div>
+                <input type="radio" name="gender" id="other" value="Other">
+                <label for="other">Other</label>
+            </div>
+        </div>
+        <label for="aadhar_no">Aadhar Number</label>
+        <input type="number" required name="addhar_no" id="aadhar_no" value="addhar_no">
+        <label for="tenth_mark">10<sup>th</sup> Marks</label>
+        <input type="number" required name="tenth_mark" id="tenth_mark" value="tenth_mark">
+        <label for="twelth_mark">12<sup>th</sup> Marks</label>
+        <input type="number" required name="twelth_mark" id="twelth_mark" value="twelth_mark">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+
+</html>
