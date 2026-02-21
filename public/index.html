@@ -41,57 +41,7 @@
         <input type="number" required name="twelth_mark" id="twelth_mark">
         <button type="submit">Submit</button>
     </form>
-    <script type="module">
-        // Import from the CDN instead of local files
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-        // Your Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBh0aPZI8rra4sWAywya3EvMY5QufZVa1k",
-            authDomain: "ssc-registration-form.firebaseapp.com",
-            databaseURL: "https://ssc-registration-form-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "ssc-registration-form",
-            storageBucket: "ssc-registration-form.firebasestorage.app",
-            messagingSenderId: "75116308268",
-            appId: "1:75116308268:web:c03ab89cc33ec502d66e89"
-        };
-
-        // Initialize Firebase and Database
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
-        const form = document.getElementById('registrationForm');
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(form);
-            const data = {
-                firstName: formData.get('fname'),
-                middleName: formData.get('mname'),
-                lastName: formData.get('lname'),
-                gender: formData.get('gender'),
-                aadharNo: formData.get('aadhar_no'),
-                tenthMarks: formData.get('tenth_mark'),
-                twelfthMarks: formData.get('twelth_mark'),
-                timestamp: Date.now()
-            };
-
-            const registrationsRef = ref(database, 'registrations');
-            const newEntryRef = push(registrationsRef);
-
-            set(newEntryRef, data)
-                .then(() => {
-                    alert('Data saved successfully!');
-                    form.reset();
-                })
-                .catch((error) => {
-                    console.error('Error saving data:', error);
-                    alert('Error saving data: ' + error.message);
-                });
-        });
-    </script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>
