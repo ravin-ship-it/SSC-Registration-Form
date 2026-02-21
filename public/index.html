@@ -10,18 +10,18 @@
 </head>
 
 <body>
-    <form action="https://console.firebase.google.com/u/0/project/ssc-registration-form/database/ssc-registration-form-default-rtdb/data/~2F?fb_gclid=Cj0KCQiAqeDMBhDcARIsAJEbU9RCYkq0y16VJlPAlQzSfbdBMq2_bXjSr-dquQIE5UKGoQZW5jxiRqIaAixzEALw_wcB&fb_utm_campaign=Cloud-SS-DR-Firebase-FY26-global-gsem-1713590&fb_utm_content=text-ad&fb_utm_medium=cpc&fb_utm_source=google&fb_utm_term=KW_firebase">
+    <form id="registrationForm">
         <h2>SSC Registration Form</h2>
         <label for="fname">First Name</label>
         <input type="text" required name="fname" id="fname">
         <label for="mname">Middle Name</label>
-        <input type="mname" name="mname" id="mname">
+        <input type="text" name="mname" id="mname">
         <label for="lname">Last Name</label>
         <input type="text" name="lname" id="lname">
         <label for="gender">Select Your Gender</label>
         <div id="gender">
             <div>
-                <input type="radio" name="gender" id="male" value="Male">
+                <input type="radio" name="gender" id="male" value="Male" required>
                 <label for="male">Male</label>
             </div>
             <div>
@@ -33,21 +33,21 @@
                 <label for="other">Other</label>
             </div>
         </div>
-        <label for="aadhar_no required">Aadhar Number</label>
-        <input type="number" required name="addhar_no" id="aadhar_no" value="addhar_no">
-        <label for="tenth_mark required">10<sup>th</sup> Marks</label>
-        <input type="number" required name="tenth_mark" id="tenth_mark" value="tenth_mark">
-        <label for="twelth_mark required">12<sup>th</sup> Marks</label>
-        <input type="number" required name="twelth_mark" id="twelth_mark" value="twelth_mark">
+        <label for="aadhar_no">Aadhar Number</label>
+        <input type="number" required name="aadhar_no" id="aadhar_no">
+        <label for="tenth_mark">10<sup>th</sup> Marks</label>
+        <input type="number" required name="tenth_mark" id="tenth_mark">
+        <label for="twelth_mark">12<sup>th</sup> Marks</label>
+        <input type="number" required name="twelth_mark" id="twelth_mark">
         <button type="submit">Submit</button>
     </form>
-    <script>
+    <script type="module">
         // Import from the CDN instead of local files
-        import {initializeApp} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import {getDatabase,ref,push,set} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         // Your Firebase configuration
-        const firebaseConfig={
+        const firebaseConfig = {
             apiKey: "AIzaSyBh0aPZI8rra4sWAywya3EvMY5QufZVa1k",
             authDomain: "ssc-registration-form.firebaseapp.com",
             databaseURL: "https://ssc-registration-form-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -58,20 +58,39 @@
         };
 
         // Initialize Firebase and Database
-        const app=initializeApp(firebaseConfig);
-        const database=getDatabase(app);
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
-        // Example: Function to save a registration
-        function saveRegistration(name,email) {
-            const registrationsRef=ref(database,'registrations');
-            const newEntryRef=push(registrationsRef); // Creates a unique ID
+        const form = document.getElementById('registrationForm');
 
-            set(newEntryRef,{
-                full_name: name,
-                email: email,
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = {
+                firstName: formData.get('fname'),
+                middleName: formData.get('mname'),
+                lastName: formData.get('lname'),
+                gender: formData.get('gender'),
+                aadharNo: formData.get('aadhar_no'),
+                tenthMarks: formData.get('tenth_mark'),
+                twelfthMarks: formData.get('twelth_mark'),
                 timestamp: Date.now()
-            });
-        }
+            };
+
+            const registrationsRef = ref(database, 'registrations');
+            const newEntryRef = push(registrationsRef);
+
+            set(newEntryRef, data)
+                .then(() => {
+                    alert('Data saved successfully!');
+                    form.reset();
+                })
+                .catch((error) => {
+                    console.error('Error saving data:', error);
+                    alert('Error saving data: ' + error.message);
+                });
+        });
     </script>
 </body>
 
